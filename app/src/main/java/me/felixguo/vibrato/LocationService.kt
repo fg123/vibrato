@@ -12,8 +12,8 @@ import kotlin.math.max
 import kotlin.math.roundToInt
 
 
-private const val LOCATION_INTERVAL = 1000L
-private const val LOCATION_DISTANCE = 10F
+private const val LOCATION_INTERVAL = 500L
+private const val LOCATION_DISTANCE = 5F
 private const val TAG = "VIBRATO-SERVICE"
 private const val NOTIFICATION_CHANNEL_ID = "vibrato-on-your-way-channel"
 
@@ -56,7 +56,8 @@ class LocationService : Service() {
         )
         val distanceAway = results[0].roundToInt()
         val distanceFromVibration = max(0, (distanceAway - radius).roundToInt())
-        val notificationContent = "You are ${distanceAway}m away from your destination! ${distanceFromVibration}m before vibration!"
+        val notificationContent =
+            "You are ${distanceAway}m away from your destination! ${distanceFromVibration}m before vibration!"
         notification.setContentText(notificationContent)
         notification.setStyle(Notification.BigTextStyle().bigText(notificationContent))
         updateNotification()
@@ -123,8 +124,10 @@ class LocationService : Service() {
         notification = Notification.Builder(this)
             .setContentTitle("You're on your way!")
             .setContentText("Waiting for location update...")
-            .setStyle(Notification.BigTextStyle()
-                .bigText("Waiting for location update..."))
+            .setStyle(
+                Notification.BigTextStyle()
+                    .bigText("Waiting for location update...")
+            )
             .setSmallIcon(R.drawable.ic_pin)
             .setColor(resources.getColor(R.color.colorPrimaryDark))
             .setContentIntent(pIntent)
