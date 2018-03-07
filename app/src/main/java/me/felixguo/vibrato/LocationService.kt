@@ -85,7 +85,7 @@ class LocationService : Service() {
         )
         radius = intent.getDoubleExtra(INTENT_RADIUS, 0.0)
 
-        return Service.START_NOT_STICKY
+        return Service.START_STICKY
     }
 
     override fun onCreate() {
