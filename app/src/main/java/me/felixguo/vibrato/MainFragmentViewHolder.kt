@@ -71,12 +71,16 @@ class MainFragmentViewHolder(private val fragment: MainFragment, private val map
     }
 
     fun updatePlaceName(position: LatLng) {
-        val addressList = geocoder.getFromLocation(
-            position.latitude, position.longitude, 1
-        )
-        if (addressList.size > 0 && place_name.visible) {
-            place_name.text = addressList[0].getFullAddress()
-        }
+        Thread {
+            val addressList = geocoder.getFromLocation(
+                    position.latitude, position.longitude, 1
+            )
+            if (addressList.size > 0 && place_name.visible) {
+                place_name.post {
+                    place_name.text = addressList[0].getFullAddress()
+                }
+            }
+        }.start()
     }
 
     private fun vectorToBitmap(@DrawableRes id: Int, @ColorInt color: Int = Color.BLACK): BitmapDescriptor {
